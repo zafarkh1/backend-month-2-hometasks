@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "title": "World cup",
+    "userId": 1
+  },
+  {
+    "id": 2,
+    "title": "Welcome to Inter Miami",
+    "userId": 1
+  },
+  {
+    "id": 3,
+    "title": "Leo is GOAT",
+    "userId": 2
+  },
+  {
+    "id": 4,
+    "title": "Leo is the best",
+    "userId": 2
+  }
+]
