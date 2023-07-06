@@ -1,45 +1,16 @@
-import express from "express";
-import { PORT } from "./config/app.config.js";
-import { readFileCustom } from "./helpers/readFile.helper.js";
-import { writeFileCustom } from "./helpers/writeFile.helper.js";
-import { sign, verify } from "./helpers/jwt.helper.js";
-import { verifyAccess } from "./middlewares/verify-access.middleware.js";
-import { signIn, signOut } from "./controllers/auth.controller.js";
+import express from 'express'
+import {APP_PORT} from './config/app.config.js'
+import routes from './route/companies.route.js'
+import {join} from 'path'
 
-const app = express();
+const app = express()
 
-app.use(verifyAccess);
-app.use(express.json());
+app.use(express.urlencoded())
+app.use('/api', routes)
 
-app.post("/sign-in", signIn);
-app.post("/sign-out", signOut);
+app.use("public", express.static(join(process.cwd(), "src", "public")));
 
-app.get("", (req, res) => {
-  const userId = req.userId;
-  const userPosts = readFileCustom('users.json').filter((el) => el.userId == userId && delete el.userId);
+app.set('view engine', 'ejs')
+app.set('views', join(process.cwd(), 'src', 'view'))
 
-	if(!userPosts) {
-		res.status(401).send('Post not found')
-	}
-
-  res.send(readFileCustom("posts.json"));
-});
-
-app.post("/posts", (req, res) => {
-  const url = req.url.split("/")[2];
-  const userId = req.userId;
-  const allPosts = readFileCustom("posts.json");
-
-  allPosts.push({
-    id: allPosts.at(-1)?.id + 1 || 1,
-    ...req.body,
-  });
-
-  writeFileCustom("posts", allPosts);
-
-  res.status(201).json({
-    message: "Successfully created",
-  });
-});
-
-app.listen(PORT, console.log("waiting ..."));
+app.listen(APP_PORT, console.log('listening ...'))
