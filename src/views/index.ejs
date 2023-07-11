@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../public//css/main.css">
+	<title>Document</title>
+</head>
+
+<body>
+	<div class="container">
+		<p>😍</p>
+		<h1>Create account</h1>
+		<p>When you create an account you will be able to add your public dog walker profiles via the front end</p>
+
+		<form action="/api/user-info" method="POST" , enctype="multipart/form-data">
+			<div>
+				<label for="firstName">First name</label>
+				<input type="text" name="firstName" id="firstName">
+			</div>
+			<div>
+				<label for="lastName">Last name</label>
+				<input type="text" name="lastName" id="lastName">
+			</div>
+			<input type="file" name="image ">
+			<button type="submit">Submit</button>
+		</form>
+		<p class="login">Already have an account? <span>Log in.</span></p>
+		<ul>
+			<% data.forEach(el=> { %>
+				<li>
+					<h3>
+						<%= el.firstName %>
+					</h3>
+					<h3>
+						<%= el.lastName %>
+					</h3>
+					<img src="<% el.image %>" alt="error">
+				</li>
+				<% }) %>
+		</ul>
+	</div>
+</body>
+
+</html>
